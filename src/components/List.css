@@ -1,0 +1,27 @@
+.List {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.List > input {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgb(220, 220, 220);
+  padding: 15px 0;
+}
+
+.List > input:focus {
+  outline: none;
+  border-bottom: 1px solid rgb(37, 147, 255);
+}
+
+.todos_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.todos_wrapper li {
+  list-style-type: none;
+}
