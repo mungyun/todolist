@@ -1,4 +1,4 @@
-import { useState, useMemo, useContext } from "react";
+import { useState, useMemo, useContext, ChangeEvent } from "react";
 import "./List.css";
 import Todoitem from "./Todoitem";
 import { TodoStateContext } from "../App";
@@ -7,7 +7,7 @@ function List() {
   const todos = useContext(TodoStateContext);
   const [search, setSearch] = useState("");
 
-  const onChangeSearch = (e) => {
+  const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 

@@ -1,10 +1,22 @@
+import { useRef, useReducer, useCallback, createContext, useMemo } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Editor from "./components/Editor";
 import List from "./components/List";
-import { useRef, useReducer, useCallback, createContext, useMemo } from "react";
 
-const mockData = [
+interface Todo {
+  id: number;
+  isDone: boolean;
+  content: string;
+  date: number;
+}
+
+type TodoAction =
+  | { type: "CREATE"; data: Todo }
+  | { type: "UPDATE"; targetId: number }
+  | { type: "DELETE"; targetId: number };
+
+const mockData: Todo[] = [
   {
     id: 0,
     isDone: false,
@@ -25,7 +37,7 @@ const mockData = [
   },
 ];
 
-function reducer(state, action) {
+function reducer(state: Todo[], action: TodoAction): Todo[] {
   switch (action.type) {
     case "CREATE":
       return [action.data, ...state];
@@ -36,39 +48,48 @@ function reducer(state, action) {
       );
 
     case "DELETE":
-      return state.map((item) => item.id !== action.targetId);
+      return state.filter((item) => item.id !== action.targetId);
+
     default:
       return state;
   }
 }
 
-export const TodoStateContext = createContext();
-export const TodoDispatchContext = createContext();
+interface TodoDispatchContextProps {
+  onCreate: (content: string) => void;
+  onUpdate: (targetId: number) => void;
+  onDelete: (targetId: number) => void;
+}
+
+export const TodoStateContext = createContext<Todo[]>([]);
+export const TodoDispatchContext = createContext<
+  TodoDispatchContextProps | undefined
+>(undefined);
 
 function App() {
   const [todos, dispatch] = useReducer(reducer, mockData);
-  const idRef = useRef(3);
+  const idRef = useRef<number>(3);
 
-  const onCreate = useCallback((content) => {
+  const onCreate = useCallback((content: string) => {
     dispatch({
       type: "CREATE",
       data: {
         id: idRef.current++,
         isDone: false,
         content: content,
-        data: new Date().getTime(),
+        date: new Date().getTime(),
       },
     });
   }, []);
 
-  const onUpdate = useCallback((targetId) => {
+  const onUpdate = useCallback((targetId: number) => {
     dispatch({
       type: "UPDATE",
       targetId: targetId,
     });
   }, []);
 
-  const onDelete = useCallback((targetId) => {
+  const onDelete = useCallback((targetId: number) => {
     dispatch({
       type: "DELETE",
       targetId: targetId,
@@ -77,7 +98,7 @@ function App() {
 
   const memoizeDispatch = useMemo(() => {
     return { onCreate, onUpdate, onDelete };
-  }, []);
+  }, [onCreate, onUpdate, onDelete]);
 
   return (
     <div className="App">
