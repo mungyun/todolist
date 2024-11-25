@@ -7,6 +7,10 @@
 
 <br>
 
+## 배포 링크 
+
+https://todoapp-eight-pi.vercel.app/
+
 
 ## 프로젝트 소개
 
@@ -17,4 +21,5 @@ React로 TODO-LIST를 만들고 이후, TypeScipt로 변경하며 두 기술 스
     <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
   <img src="https://img.shields.io/badge/React-009900?style=for-the-badge&logo=React&logoColor=white"> 
+  <img src="https://img.shields.io/badge/TypeScript-005900?style=for-the-badge&logo=TypeScript&logoColor=white"> 
 </div>
